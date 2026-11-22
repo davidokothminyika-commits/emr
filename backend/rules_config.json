@@ -1,0 +1,68 @@
+[
+  {
+    "rule_id": "VL-OVERDUE-01",
+    "description": "HIV viral load follow-up potentially overdue (illustrative interval).",
+    "applicable_conditions": ["HIV care"],
+    "investigation": "HIV Viral Load",
+    "interval_days": 180,
+    "severity": "High",
+    "alert_message": "HIV viral load follow-up may be overdue based on configured interval.",
+    "evidence_requirements": ["last viral load result date"],
+    "enabled": true
+  },
+  {
+    "rule_id": "DM-HBA1C-01",
+    "description": "HbA1c investigation potentially overdue (illustrative interval).",
+    "applicable_conditions": ["Type 2 Diabetes"],
+    "investigation": "HbA1c",
+    "interval_days": 180,
+    "severity": "Medium",
+    "alert_message": "HbA1c follow-up may be overdue based on configured interval.",
+    "evidence_requirements": ["last HbA1c result date"],
+    "enabled": true
+  },
+  {
+    "rule_id": "ALLERGY-REVIEW-01",
+    "description": "Documented allergy requires medication review.",
+    "applicable_conditions": ["any"],
+    "investigation": null,
+    "interval_days": null,
+    "severity": "Medium",
+    "alert_message": "Documented allergy present; medication list requires clinician review.",
+    "evidence_requirements": ["allergy record", "medication list"],
+    "enabled": true
+  },
+  {
+    "rule_id": "DOCUMENTATION-01",
+    "description": "Latest encounter has incomplete documentation.",
+    "applicable_conditions": ["any"],
+    "investigation": null,
+    "interval_days": null,
+    "severity": "Low",
+    "alert_message": "Latest encounter documentation appears incomplete.",
+    "evidence_requirements": ["encounter record"],
+    "enabled": true
+  },
+  {
+    "rule_id": "FOLLOWUP-OVERDUE-01",
+    "description": "A scheduled follow-up date has passed without corresponding documented encounter.",
+    "applicable_conditions": ["any"],
+    "investigation": null,
+    "interval_days": null,
+    "severity": "High",
+    "alert_message": "Scheduled follow-up date has passed; verify whether encounter occurred.",
+    "evidence_requirements": ["follow-up task", "encounter history"],
+    "enabled": true
+  },
+  {
+    "rule_id": "DATA-CONFLICT-01",
+    "description": "Conflicting entries require clinician verification.",
+    "applicable_conditions": ["any"],
+    "investigation": null,
+    "interval_days": null,
+    "severity": "Critical",
+    "alert_message": "Conflicting clinical entries detected; clinician verification required.",
+    "evidence_requirements": ["conflicting records"],
+    "enabled": true
+  }
+]

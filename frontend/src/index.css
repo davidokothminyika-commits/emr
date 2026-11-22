@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  --cv-background: #F8F9FA;
+  --cv-surface: #FFFFFF;
+  --cv-surface-muted: #F3F5F4;
+  --cv-surface-hover: #F0F2F1;
+  --cv-primary: #245C4F;
+  --cv-primary-hover: #19483D;
+  --cv-primary-active: #123630;
+  --cv-primary-subtle: #E6EFEC;
+  --cv-primary-subtle-hover: #D6E5E0;
+  --cv-text: #202522;
+  --cv-text-muted: #737B76;
+  --cv-text-subtle: #9AA29D;
+  --cv-text-inverse: #FFFFFF;
+  --cv-border: #E6E9E7;
+  --cv-border-strong: #D2D7D4;
+  --cv-border-focus: #245C4F;
+  --cv-danger: #C43D3D;
+  --cv-danger-hover: #A83030;
+  --cv-danger-subtle: #F8E7E7;
+  --cv-success: #247A50;
+  --cv-success-subtle: #E5F2EB;
+  --cv-warning: #A86A00;
+  --cv-warning-subtle: #FBF0DC;
+  --cv-info: #2A5A8C;
+  --cv-info-subtle: #E6EEF7;
+  --cv-overlay: rgba(32, 37, 34, 0.45);
+  --cv-focus-ring: rgba(36, 92, 79, 0.28);
+  --cv-radius-sm: 4px;
+  --cv-radius-md: 6px;
+  --cv-radius-lg: 8px;
+  --cv-shadow-xs: 0 1px 2px rgba(32, 37, 34, 0.05);
+  --cv-shadow-sm: 0 1px 3px rgba(32, 37, 34, 0.08), 0 1px 2px rgba(32, 37, 34, 0.04);
+  --cv-shadow-md: 0 4px 12px rgba(32, 37, 34, 0.08), 0 2px 4px rgba(32, 37, 34, 0.04);
+  --cv-shadow-lg: 0 12px 32px rgba(32, 37, 34, 0.12), 0 4px 8px rgba(32, 37, 34, 0.06);
+}
+
+body { background: var(--cv-background); color: var(--cv-text); font-family: 'Inter', system-ui, sans-serif; }
+h1,h2,h3 { font-family: 'Manrope', system-ui, sans-serif; }
+
+@theme inline {
+  --color-cv-background: var(--cv-background);
+  --color-cv-surface: var(--cv-surface);
+  --color-cv-primary: var(--cv-primary);
+  --color-cv-text: var(--cv-text);
+  --color-cv-text-muted: var(--cv-text-muted);
+  --color-cv-border: var(--cv-border);
+  --color-cv-danger: var(--cv-danger);
+  --color-cv-success: var(--cv-success);
+  --color-cv-warning: var(--cv-warning);
+  --color-cv-info: var(--cv-info);
+}
