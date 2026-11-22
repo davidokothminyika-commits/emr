@@ -152,13 +152,21 @@ class FollowUpTask(Base):
     __tablename__ = "followup_tasks"
     id: Mapped[str] = mapped_column(String, primary_key=True)
     patient_id: Mapped[str] = mapped_column(ForeignKey("patients.id"))
+    title: Mapped[str] = mapped_column(String, nullable=True)
     description: Mapped[str] = mapped_column(Text)
     due_date: Mapped[date] = mapped_column(Date)
     priority: Mapped[str] = mapped_column(String, default="medium")
-    related_record_id: Mapped[str] = mapped_column(String, nullable=True)
     status: Mapped[str] = mapped_column(String, default="pending")
+    assigned_clinician_id: Mapped[str] = mapped_column(String, nullable=True)
     assigned_clinician: Mapped[str] = mapped_column(String, nullable=True)
+    related_record_type: Mapped[str] = mapped_column(String, nullable=True)
+    related_record_id: Mapped[str] = mapped_column(String, nullable=True)
+    completion_notes: Mapped[str] = mapped_column(Text, nullable=True)
+    created_by: Mapped[str] = mapped_column(String, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    completed_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    cancelled_at: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
 class Referral(Base):
     __tablename__ = "referrals"

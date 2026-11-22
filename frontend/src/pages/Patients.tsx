@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import api from '../api';
+import FollowUpModal from '../components/FollowUpModal';
 
 export default function Patients() {
-  const [params] = useSearchParams();
-  const [q, setQ] = useState(params.get('q') || '');
+  const [q, setQ] = useState('');
   const [list, setList] = useState<any[]>([]);
+  const [modalPid, setModalPid] = useState<string | null>(null);
   const nav = useNavigate();
   async function load() {
     const r = await api.get('/api/patients', { params: { q } });
@@ -22,17 +23,21 @@ export default function Patients() {
       <div className="bg-white border border-[var(--cv-border)] rounded-lg overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-[var(--cv-surface-muted)]">
-            <tr><th className="p-3 text-left">ID</th><th className="p-3 text-left">Name</th><th className="p-3 text-left">Sex</th><th className="p-3 text-left">Program</th><th className="p-3 text-left">Status</th></tr>
+            <tr><th className="p-3 text-left">ID</th><th className="p-3 text-left">Name</th><th className="p-3 text-left">Sex</th><th className="p-3 text-left">Program</th><th className="p-3 text-left">Status</th><th className="p-3 text-left">Actions</th></tr>
           </thead>
           <tbody>
             {list.map(p => (
-              <tr key={p.id} onClick={() => nav(`/patients/${p.id}`)} className="border-t border-[var(--cv-border)] hover:bg-[var(--cv-surface-hover)] cursor-pointer">
-                <td className="p-3">{p.id}</td><td className="p-3">{p.name}</td><td className="p-3">{p.sex}</td><td className="p-3">{p.program}</td><td className="p-3">{p.status}</td>
+              <tr key={p.id} className="border-t border-[var(--cv-border)] hover:bg-[var(--cv-surface-hover)]">
+                <td className="p-3 cursor-pointer" onClick={() => nav(`/patients/${p.id}`)}>{p.id}</td>
+                <td className="p-3 cursor-pointer" onClick={() => nav(`/patients/${p.id}`)}>{p.name}</td>
+                <td className="p-3">{p.sex}</td><td className="p-3">{p.program}</td><td className="p-3">{p.status}</td>
+                <td className="p-3"><button onClick={() => setModalPid(p.id)} className="text-xs px-2 py-1 border border-[var(--cv-border)] rounded">Follow-up</button></td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {modalPid && <FollowUpModal open={true} onClose={() => setModalPid(null)} onCreated={() => {}} presetPatient={modalPid} />}
     </div>
   );
 }

@@ -13,6 +13,11 @@ export default function Dashboard() {
     ['Overdue investigations', d.overdue_investigations],
     ['Pending approvals', d.pending_approvals],
     ['Upcoming follow-ups', d.upcoming_followups],
+    ['Pending follow-ups', d.pending_followups],
+    ['Overdue follow-ups', d.overdue_followups],
+    ['Completed follow-ups', d.completed_followups],
+    ['Due today', d.due_today],
+    ['Due within 7 days', d.due_within_7],
   ];
   const labData = Object.entries(d.lab_overview).map(([k, v]) => ({ name: k, count: v }));
   const alertData = Object.entries(d.alert_distribution).map(([k, v]) => ({ name: k, count: v }));

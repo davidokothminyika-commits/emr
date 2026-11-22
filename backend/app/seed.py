@@ -110,11 +110,11 @@ def seed_if_empty():
 
         # Follow-ups
         fups = [
-            ("FU-0001","P-0006",date(2023,1,1),"Pending follow-up visit", "high", None, "pending", "Dr. Otieno"),
-            ("FU-0002","P-0003",date(2023,6,1),"HbA1c follow-up", "medium", "L-0008", "pending", "Dr. Otieno"),
+            ("FU-0001","P-0006","Pending follow-up visit","Pending follow-up visit", date(2023,1,1),"high", None, "pending", "Dr. Otieno"),
+            ("FU-0002","P-0003","HbA1c follow-up","HbA1c follow-up", date(2023,6,1),"medium", "L-0008", "pending", "Dr. Otieno"),
         ]
         for f in fups:
-            db.add(FollowUpTask(id=f[0],patient_id=f[1],due_date=f[2],description=f[3],priority=f[4],related_record_id=f[5],status=f[6],assigned_clinician=f[7]))
+            db.add(FollowUpTask(id=f[0],patient_id=f[1],title=f[2],description=f[3],due_date=f[4],priority=f[5],related_record_id=f[6],status=f[7],assigned_clinician=f[8],created_by="U-CLIN"))
         db.commit()
     finally:
         db.close()

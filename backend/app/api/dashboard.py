@@ -26,6 +26,12 @@ def dashboard(db: Session = Depends(get_db), user=Depends(get_current_user)):
     # overdue investigations count
     overdue = len([a for a in open_alerts if "overdue" in a.title.lower() or "overdue" in a.reason.lower()])
     pending_approvals = len([n for n in notes if n.status == "draft"])
+    pending_fups = [f for f in fups if f.status == "pending"]
+    overdue_fups = [f for f in fups if f.status == "pending" and f.due_date < date.today()]
+    completed_fups = [f for f in fups if f.status == "completed"]
+    today = date.today()
+    due_today = [f for f in fups if f.status == "pending" and f.due_date == today]
+    due_7 = [f for f in fups if f.status == "pending" and today <= f.due_date <= date.fromordinal(today.toordinal()+7)]
     upcoming = len([f for f in fups if f.status == "pending" and f.due_date >= date.today()])
     # alert distribution
     dist = {}
@@ -48,6 +54,11 @@ def dashboard(db: Session = Depends(get_db), user=Depends(get_current_user)):
         "overdue_investigations": overdue,
         "pending_approvals": pending_approvals,
         "upcoming_followups": upcoming,
+        "pending_followups": len(pending_fups),
+        "overdue_followups": len(overdue_fups),
+        "completed_followups": len(completed_fups),
+        "due_today": len(due_today),
+        "due_within_7": len(due_7),
         "alert_distribution": dist,
         "lab_overview": lab_counts,
         "recent_patients": recent_patients,

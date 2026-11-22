@@ -46,6 +46,9 @@ def get_history(pid: str, db: Session = Depends(get_db), user=Depends(get_curren
         "encounters": [EncounterOut(id=e.id, patient_id=e.patient_id, date=e.date, type=e.type, notes=e.notes, clinician=e.clinician, complete=e.complete, origin=e.origin).model_dump() for e in rec.encounters],
     }
 
-@router.get("/{pid}/summary")
-def get_summary_placeholder(pid: str):
-    return {"message": "Use POST generate-summary"}
+@router.get("/{pid}/followups")
+def patient_followups(pid: str, db: Session = Depends(get_db), user=Depends(get_current_user)):
+    from .followups import out as fout
+    from ..models import FollowUpTask
+    tasks = db.query(FollowUpTask).filter(FollowUpTask.patient_id == pid).all()
+    return [fout(t) for t in tasks]

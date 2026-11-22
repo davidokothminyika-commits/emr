@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import api from '../api';
+import FollowUpModal from '../components/FollowUpModal';
 
 export default function Alerts() {
   const [alerts, setAlerts] = useState<any[]>([]);
   const [sev, setSev] = useState('');
+  const [modalAlert, setModalAlert] = useState<any>(null);
   async function load() {
     const r = await api.get('/api/alerts', { params: sev ? { severity: sev } : {} });
     setAlerts(r.data);
@@ -42,10 +44,23 @@ export default function Alerts() {
               <button onClick={() => action(a.id, 'review')} className="text-xs px-2 py-1 border border-[var(--cv-border)] rounded">Mark reviewed</button>
               <button onClick={() => action(a.id, 'dismiss')} className="text-xs px-2 py-1 border border-[var(--cv-border)] rounded">Dismiss</button>
               <button onClick={() => action(a.id, 'reopen')} className="text-xs px-2 py-1 border border-[var(--cv-border)] rounded">Reopen</button>
+              <button onClick={() => setModalAlert(a)} className="text-xs px-2 py-1 border border-[var(--cv-border)] rounded">Create Follow-up</button>
             </div>
           </div>
         ))}
       </div>
+      {modalAlert && (
+        <FollowUpModal
+          open={true}
+          onClose={() => setModalAlert(null)}
+          onCreated={() => {}}
+          presetPatient={modalAlert.patient_id}
+          presetTitle={modalAlert.title}
+          presetDescription={modalAlert.reason}
+          presetRelatedType="alert"
+          presetRelatedId={modalAlert.id}
+        />
+      )}
     </div>
   );
 }

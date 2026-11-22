@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../api';
+import FollowUpModal from '../components/FollowUpModal';
 
 export default function PatientProfile() {
   const { id } = useParams();
@@ -8,6 +9,8 @@ export default function PatientProfile() {
   const [summary, setSummary] = useState<any>(null);
   const [timeline, setTimeline] = useState<any[]>([]);
   const [alerts, setAlerts] = useState<any[]>([]);
+  const [followups, setFollowups] = useState<any[]>([]);
+  const [modal, setModal] = useState(false);
   const [sourceDetail, setSourceDetail] = useState<any>(null);
 
   async function load() {
@@ -17,6 +20,8 @@ export default function PatientProfile() {
     setTimeline(t.data);
     const a = await api.get(`/api/patients/${id}/alerts`);
     setAlerts(a.data);
+    const f = await api.get(`/api/patients/${id}/followups`);
+    setFollowups(f.data);
   }
   useEffect(() => { load(); }, [id]);
 
@@ -39,6 +44,7 @@ export default function PatientProfile() {
       <p className="text-sm text-[var(--cv-text-muted)] mb-4">{hist.patient.id} • {hist.patient.sex} • {hist.patient.program} • {hist.patient.status}</p>
       <div className="flex gap-2 mb-6">
         <button onClick={genSummary} className="bg-[var(--cv-primary)] text-white px-4 py-2 rounded-md text-sm">Generate summary</button>
+        <button onClick={() => setModal(true)} className="bg-[var(--cv-surface)] border border-[var(--cv-border-strong)] px-4 py-2 rounded-md text-sm">Add to Follow-up</button>
       </div>
 
       {summary && (
@@ -96,6 +102,12 @@ export default function PatientProfile() {
         </ul>
       </div>
 
+      <div className="bg-white border border-[var(--cv-border)] rounded-lg p-4 mb-6">
+        <h2 className="text-lg font-semibold mb-2">Follow-ups</h2>
+        {followups.length === 0 ? <p className="text-sm text-[var(--cv-text-muted)]">No follow-up tasks.</p> : followups.map((f:any) => (
+          <div key={f.id} className="text-sm py-1 border-b border-[var(--cv-border)]">{f.title || f.description} — {f.status} (due {f.due_date})</div>
+        ))}
+      </div>
       <div className="bg-white border border-[var(--cv-border)] rounded-lg p-4">
         <h2 className="text-lg font-semibold mb-2">Alerts</h2>
         {alerts.length === 0 ? <p className="text-sm text-[var(--cv-text-muted)]">No alerts.</p> : alerts.map((a: any) => (
@@ -104,6 +116,7 @@ export default function PatientProfile() {
           </div>
         ))}
       </div>
+      <FollowUpModal open={modal} onClose={() => setModal(false)} onCreated={() => { load(); }} presetPatient={id} />
     </div>
   );
 }
